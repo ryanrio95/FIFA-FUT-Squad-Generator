@@ -22,26 +22,6 @@ fun <P : Player> groupByPositions(players: Collection<P>): List<P> {
     return groupedPlayers
 }
 
-fun <P : Player> groupByPositionsAndOriginalOrder(players: Collection<P>): List<P> {
-    val playersList = ArrayList(players)
-    val groupedPlayers = ArrayList<P>()
-
-    while (playersList.isNotEmpty()) {
-        for (position in Position.values()) {
-            val playerIndex = playersList.indexOfFirst { it.positions.contains(position) }
-            if (playerIndex >= 0) {
-                val player = playersList.removeAt(playerIndex)
-                groupedPlayers.add(player)
-            }
-            if (playersList.isNotEmpty()) {
-                val player = playersList.removeAt(0)
-                groupedPlayers.add(player)
-            }
-        }
-    }
-    return groupedPlayers
-}
-
 fun <P : Player> getFormations(players: List<P>, formations: List<Formation>): Map<Formation, List<P>> {
     return formations.associateWith {
         getPositioning(players, it.positions)
@@ -182,6 +162,7 @@ abstract class SquadGenerator<S : Squad<P>, P : Player> {
     private fun addPlayer(squad: S, players: List<P>, playerIndex: Int) {
         val player = players[playerIndex]
 
+        onBeforeAddPlayer(squad, player)
         squad.players.add(player)
         onAddPlayer(squad, player)
 
@@ -191,6 +172,9 @@ abstract class SquadGenerator<S : Squad<P>, P : Player> {
 
         squad.players.remove(player)
         onRemovePlayer(squad, player)
+    }
+
+    open fun onBeforeAddPlayer(squad: S, player: P) {
     }
 
     open fun onAddPlayer(squad: S, player: P) {

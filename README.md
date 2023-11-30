@@ -1,5 +1,5 @@
-# FIFA 23 FUT Ultimate Team Automated Squad Generator
-This project makes it possible to generate FIFA Ultimate Team squads with Kotlin.
+# EA Sports FC 24 FUT Ultimate Team Automated Squad Generator
+This project makes it possible to generate EA Sports FC Ultimate Team squads with Kotlin.
 
 You can write your own implementation of the SquadGenerator by extending the SquadGenerator or ExampleSquadGenerator.
 

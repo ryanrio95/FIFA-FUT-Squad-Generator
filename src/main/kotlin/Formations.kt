@@ -144,6 +144,22 @@ val FORMATIONS = listOf(
         )
     ),
     Formation(
+        "4-2-1-3",
+        listOf(
+            Position.GK,
+            Position.LB,
+            Position.CB,
+            Position.CB,
+            Position.RB,
+            Position.CDM,
+            Position.CAM,
+            Position.CDM,
+            Position.LW,
+            Position.ST,
+            Position.RW
+        )
+    ),
+    Formation(
         "4-2-2-2",
         listOf(
             Position.GK,
@@ -432,7 +448,7 @@ val FORMATIONS = listOf(
         )
     ),
     Formation(
-        "5-2-2-1",
+        "5-2-2-1 / 5-2-3",
         listOf(
             Position.GK,
             Position.LWB,
@@ -448,7 +464,7 @@ val FORMATIONS = listOf(
         )
     ),
     Formation(
-        "5-1-2-2",
+        "5-1-2-2 / 5-3-2",
         listOf(
             Position.GK,
             Position.LWB,
