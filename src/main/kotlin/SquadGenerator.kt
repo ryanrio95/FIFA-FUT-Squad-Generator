@@ -22,13 +22,19 @@ fun <P : Player> groupByPositions(players: Collection<P>): List<P> {
     return groupedPlayers
 }
 
-fun <P : Player> getFormations(players: List<P>, formations: List<Formation>): Map<Formation, List<P>> {
-    return formations.associateWith {
-        getPositioning(players, it.positions)
-    }.filter { it.value.size >= SQUAD_SIZE }
+fun <P : Player> getFormations(
+    players: List<P>,
+    formations: List<Formation>
+): Map<Formation, List<P>> {
+    return formations
+        .associateWith { getPositioning(players, it.positions) }
+        .filter { it.value.size >= SQUAD_SIZE }
 }
 
-fun <P : Player> getFormation(players: List<P>, formations: List<Formation>): Pair<Formation?, List<P>>? {
+fun <P : Player> getFormation(
+    players: List<P>,
+    formations: List<Formation>
+): Pair<Formation?, List<P>>? {
     for (formation in formations) {
         val positioning = getPositioning(players, formation.positions)
         if (positioning.size >= SQUAD_SIZE) {
@@ -110,13 +116,17 @@ fun getChemistry(players: List<Player>): Int {
         val nationCount = nationCounts[player.nation] ?: 0
         val leagueCount = leagueCounts[player.league] ?: 0
 
-        val playerChemistry = if (player.isIcon || player.isHero) {
-            3
-        } else {
-            (if (clubCount >= 7) 3 else if (clubCount >= 4) 2 else if (clubCount >= 2) 1 else 0) +
-                (if (nationCount >= 8) 3 else if (nationCount >= 5) 2 else if (nationCount >= 2) 1 else 0) +
-                (if (leagueCount >= 8) 3 else if (leagueCount >= 5) 2 else if (leagueCount >= 3) 1 else 0)
-        }
+        val playerChemistry =
+            if (player.isIcon || player.isHero) {
+                3
+            } else {
+                (if (clubCount >= 7) 3
+                else if (clubCount >= 4) 2 else if (clubCount >= 2) 1 else 0) +
+                    (if (nationCount >= 8) 3
+                    else if (nationCount >= 5) 2 else if (nationCount >= 2) 1 else 0) +
+                    (if (leagueCount >= 8) 3
+                    else if (leagueCount >= 5) 2 else if (leagueCount >= 3) 1 else 0)
+            }
         chemistry += min(playerChemistry, 3)
     }
     return chemistry
@@ -174,25 +184,21 @@ abstract class SquadGenerator<S : Squad<P>, P : Player> {
         onRemovePlayer(squad, player)
     }
 
-    open fun onBeforeAddPlayer(squad: S, player: P) {
-    }
+    open fun onBeforeAddPlayer(squad: S, player: P) {}
 
-    open fun onAddPlayer(squad: S, player: P) {
-    }
+    open fun onAddPlayer(squad: S, player: P) {}
 
     open fun isPlayerApproved(squad: S, player: P): Boolean {
         return true
     }
 
-    open fun onRemovePlayer(squad: S, player: P) {
-    }
+    open fun onRemovePlayer(squad: S, player: P) {}
 
     open fun isSquadApproved(squad: S): Boolean {
         return true
     }
 
-    open fun onSquadApproved(squad: S) {
-    }
+    open fun onSquadApproved(squad: S) {}
 
     private inner class SquadGeneratorRunnable(
         private val players: List<P>,
